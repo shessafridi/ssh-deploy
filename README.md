@@ -63,17 +63,16 @@ Example snippets:
 
 Run after building (or against `ts-node` in dev):
 
-- `node dist/cli.js -s <serverProfile> -d <deploymentProfile> <zip>`
+- `node dist/cli.js -d <deploymentProfile> <zip>`
 
 Flags/args:
 
-- `-s, --server-profile <name>`: server profile to use.
-- `-d, --deploy-profile <name>`: deployment profile to use.
+- `-d, --deploy-profile <name>`: deployment profile to use (its `serverProfile` links the server).
 - `<zip>`: path to the local zip file to upload.
 
 What happens:
 
-1. Profile files are loaded. The deployment profile must reference the chosen server profile.
+1. Profile files are loaded. The deployment profile’s `serverProfile` is resolved to a server entry.
 2. Zip is uploaded to `/home/<sshUsername>/<zipName>.zip`.
 3. Deployment script is executed as root using the selected `rootStyle`.
 
@@ -121,4 +120,4 @@ What happens:
 ```
 
 6. Run the CLI (from the directory containing the executable and the JSON files):  
-   `./dist/deploy.exe -s dev-server -d dev-app ./release.zip`
+   `./dist/deploy.exe -d dev-app ./release.zip`

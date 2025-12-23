@@ -5,7 +5,6 @@ import { loadDeploymentProfiles, loadServerProfiles } from './config';
 const program = new Command();
 
 program
-  .requiredOption('-s, --server-profile <name>')
   .requiredOption('-d, --deploy-profile <name>')
   .argument('<zip>')
   .action(async (zip, options) => {
@@ -15,12 +14,8 @@ program
     const deployment = deployments.find(d => d.name === options.deployProfile);
     if (!deployment) throw new Error('Deployment profile not found');
 
-    const server = servers.find(s => s.name === options.serverProfile);
+    const server = servers.find(s => s.name === deployment.serverProfile);
     if (!server) throw new Error('Server profile not found');
-
-    if (deployment.serverProfile !== server.name) {
-      throw new Error('Deployment profile does not match server profile');
-    }
 
     console.log('Using server profile:', {
       name: server.name,
